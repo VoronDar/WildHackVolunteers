@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="com.astery.wildhackvolunteers.ui.fragments.main.State"/>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.astery.wildhackvolunteers.ui.fragments.main.MainViewModel" />
+        <variable
+            name="fragment"
+            type="com.astery.wildhackvolunteers.ui.fragments.main.MainFragmentTransport" />
+    </data>
+<ScrollView
+    android:layout_width="match_parent"
+    android:paddingTop="70dp"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.MainActivity">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_marginStart="20dp"
+    android:layout_marginLeft="20dp"
+    android:layout_marginEnd="20dp"
+    android:layout_marginRight="20dp"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/card"
+        android:layout_margin="0dp"
+        android:visibility="@{viewModel.state != State.idle? View.VISIBLE: View.GONE}"
+        app:cardBackgroundColor="#F4F5F7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text = "ЗАДАЧИ"
+                android:textColor="#48495A"
+                android:layout_marginBottom="16dp"
+                />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/tasks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:nestedScrollingEnabled="false"
+        android:overScrollMode="never" />
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/card"
+        android:layout_margin="0dp"
+        android:visibility="@{viewModel.state != State.idle? View.VISIBLE: View.GONE}"
+        app:cardBackgroundColor="#F4F5F7"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="16dp"
+        android:layout_height="wrap_content">
+        <TextView
+            style="@style/HighLightText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text = "Мы получили твои данные и скоро их проверим)"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:layout_gravity="center"
+            />
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+        <Button
+        style="@style/CommonButton"
+        android:layout_marginTop="16dp"
+        android:layout_width="match_parent"
+        android:text = "Отправить"
+        android:onClick = "@{()-> viewModel.send()}"
+        />
+    <View
+        style="@style/divider"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal">
+
+        <Button
+            style="@style/CommonButton"
+            android:layout_width="wrap_content"
+            android:layout_weight="1"
+            android:onClick="@{() -> fragment.askQuestion()}"
+            android:text = "Задать вопрос"
+            />
+        <Space
+            android:layout_width="20dp"
+            android:layout_height="0dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            style="@style/CommonButton"
+            android:layout_weight="1"
+            android:onClick="@{() -> fragment.aboutUs()}"
+            android:text = "О нас"
+            />
+    </LinearLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        style="@style/card"
+        android:layout_margin="0dp"
+        app:cardBackgroundColor="#F4F5F7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text = "ВОПРОСЫ"
+            android:textColor="#48495A"
+            android:layout_marginBottom="16dp"
+            />
+
+        <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"
+        android:nestedScrollingEnabled="false"
+        android:id = "@+id/answers"
+        />
+    </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>
+</ScrollView>
+</layout>

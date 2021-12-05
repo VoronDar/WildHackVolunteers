@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <import type="com.astery.wildhackvolunteers.model.PersonFields"/>
+        <variable
+            name="viewModel"
+            type="com.astery.wildhackvolunteers.ui.fragments.profile.ProfileViewModel" />
+
+        <variable
+            name="fragment"
+            type="com.astery.wildhackvolunteers.ui.fragments.profile.ProfileFragment" />
+    </data>
+<ScrollView xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+
+    android:paddingTop="100dp"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".ui.activity.MainActivity">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_marginLeft="@dimen/margin_frame"
+    android:layout_marginRight="@dimen/margin_frame"
+    android:layout_height="wrap_content">
+
+    <include layout="@layout/unput_text"
+        app:value = "@={viewModel.person.name}"
+        app:hintText = "@{&quot;Имя&quot;}"
+        android:id = "@+id/name"
+        app:field = "@{PersonFields.title}"
+        app:fragment = "@{fragment}"
+        />
+
+    <include layout="@layout/unput_text"
+        app:value = "@={viewModel.person.surname}"
+        app:hintText = "@{&quot;Фамилия&quot;}"
+        android:id = "@+id/surname"
+        app:field = "@{PersonFields.surname}"
+        app:fragment = "@{fragment}"
+        />
+
+    <include layout="@layout/unput_text"
+        app:value = "@={viewModel.person.patronymic}"
+        app:hintText = "@{&quot;Отчество&quot;}"
+        android:id = "@+id/patronymic"
+        app:field = "@{PersonFields.patronymic}"
+        app:fragment = "@{fragment}"
+        />
+
+    <include layout="@layout/unput_text"
+        app:value = "@={viewModel.person.email}"
+        app:hintText = "@{&quot;Электронная почта&quot;}"
+        android:id = "@+id/email"
+        app:fragment = "@{fragment}"
+        app:field = "@{PersonFields.email}"
+        />
+
+    <include layout="@layout/unput_text"
+        app:value = "@={viewModel.person.phone}"
+        app:hintText = "@{&quot;Номер телефона&quot;}"
+        android:id = "@+id/phone"
+        app:field = "@{PersonFields.phone}"
+        app:fragment = "@{fragment}"
+        />
+
+    <include layout="@layout/unput_text"
+        app:value = "@={viewModel.person.link}"
+        app:hintText = "@{&quot;Ссылка на любимую соцсеть&quot;}"
+        android:id = "@+id/link"
+        app:fragment = "@{fragment}"
+        app:field = "@{PersonFields.link}"
+        />
+
+    <include layout="@layout/unput_text"
+        app:value = "@={viewModel.person.address}"
+        app:hintText = "@{&quot;Адрес&quot;}"
+        android:id = "@+id/address"
+        app:field = "@{PersonFields.address}"
+        app:fragment = "@{fragment}"
+        />
+
+    <include layout="@layout/unput_text"
+        app:value = "@={viewModel.person.sphere}"
+        app:hintText = "@{&quot;Сфера деятельности&quot;}"
+        android:id = "@+id/sphere"
+        app:field = "@{PersonFields.sphere}"
+        app:fragment = "@{fragment}"
+        />
+
+    <include layout="@layout/unput_text"
+        app:value = "@={viewModel.person.experience}"
+        app:hintText = "@{&quot;Походный опыт&quot;}"
+        android:id = "@+id/experience"
+        app:field = "@{PersonFields.experience}"
+        app:fragment = "@{fragment}"
+        />
+
+    <include layout="@layout/unput_text"
+        app:value = "@={viewModel.person.travelPlace}"
+        app:hintText = "@{&quot;Самое далекое посещенное место&quot;}"
+        android:id = "@+id/travel"
+        app:field = "@{PersonFields.travelPlace}"
+        app:fragment = "@{fragment}"
+        />
+
+    <Button
+        style="@style/CommonButton"
+        android:layout_width="match_parent"
+        android:text = "Сохранить"
+        android:onClick="@{() -> viewModel.save()}"/>
+</LinearLayout>
+</ScrollView>
+
+</layout>
