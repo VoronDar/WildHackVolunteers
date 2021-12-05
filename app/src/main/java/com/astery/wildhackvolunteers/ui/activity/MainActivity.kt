@@ -89,8 +89,10 @@ class MainActivity : AppCompatActivity(), ParentActivity {
         Timber.d("recognition $data $requestCode $resultCode")
         if (requestCode == SpeechToText.VOICE_RECOGNITION_REQUEST) {
             if (data != null) {
+                Timber.d("$data")
                 val matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
                 if (matches!!.isNotEmpty()) {
+                    findViewById<EditText>(R.id.search_text)!!.setText(matches[0])
                     speechToText.fragment?.getText(matches[0])
                 }
             } else {

@@ -91,6 +91,20 @@ open class Repository @Inject constructor(
         localStorage.setState(state)
     }
 
+    suspend fun getSavedAnswers():ArrayList<Answer>{
+        val list = ArrayList<Answer>()
+        val l = localStorage.getSavedAnswers()
+        for (i in l){
+            list.add(i)
+        }
+        return list
+    }
+
+    suspend fun saveAnswer(save:Boolean, answer: Answer){
+        answer.saved = save
+        localStorage.updateAnswer(answer)
+    }
+
     suspend fun fillAnswers(){
         localStorage.fillAnswers()
     }

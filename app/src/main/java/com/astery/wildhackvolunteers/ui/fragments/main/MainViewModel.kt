@@ -55,6 +55,7 @@ class MainViewModel @Inject constructor(@ApplicationContext val context: Context
     private fun get(){
         viewModelScope.launch {
             repository.fillAnswers()
+            /*
             Timber.d("all answers ${repository.getAllAnswers()}")
             val list = repository.getAnswers("Кто оплачивает")
             val list2 = repository.getAnswers("Кто оплачивает питание")
@@ -62,6 +63,8 @@ class MainViewModel @Inject constructor(@ApplicationContext val context: Context
             Timber.d("list $list")
             Timber.d("list $list2")
             Timber.d("list $list3")
+
+             */
         }
     }
 
@@ -84,11 +87,7 @@ class MainViewModel @Inject constructor(@ApplicationContext val context: Context
 
     private fun getAnswers() {
         viewModelScope.launch {
-            _answers.value = arrayListOf(
-                Answer(1, "Не дерись с медведями в лесу", "Что делать с медведями?"),
-                Answer(2, "Не играй с оленями", "Что делать с оленями?")
-            )
-            // repository.getAnswers()
+            _answers.value = repository.getSavedAnswers()
         }
     }
 
@@ -102,6 +101,12 @@ class MainViewModel @Inject constructor(@ApplicationContext val context: Context
                 _state.value = State.idle
                 repository.setState(State.idle)
             }
+        }
+    }
+
+    fun forget(answer: Answer) {
+        viewModelScope.launch {
+            repository.saveAnswer(false, answer)
         }
     }
 

@@ -22,37 +22,143 @@ class LocalStorage @Inject constructor(
 
 
     suspend fun getAnswers(sentence: String): List<Answer> {
-        val a = sentence.split(" ").toList()
+        val a = sentence.replace("?|.|,", "").replace("ё", "e").lowercase().split(" ").toList()
         Timber.d("${a.toList()}")
         return appDatabase.articleDao().getArticlesWithTag(a)
     }
 
-    suspend fun getAnswers():List<Answer>{
+    suspend fun getAnswers(): List<Answer> {
         return appDatabase.articleDao().getAdvices()
     }
+
+    suspend fun getSavedAnswers(): List<Answer> {
+        return appDatabase.articleDao().getSavedAnswers(true)
+    }
+
+    suspend fun updateAnswer(answer: Answer) {
+        appDatabase.articleDao().updateAnswer(answer)
+    }
+
     suspend fun fillAnswers() {
         val a1 = AnswerTag("перелёт")
         val a2 = AnswerTag("переезд")
         val a3 = AnswerTag("камчатка")
+        val a32 = AnswerTag("камчатку")
         val a31 = AnswerTag("камчатки")
         val a4 = AnswerTag("доехать")
+        val a41 = AnswerTag("добраться")
         val a5 = AnswerTag("оплачивает")
         val a51 = AnswerTag("оплачиваемое")
         val a6 = AnswerTag("питание")
         val a7 = AnswerTag("пропитание")
+        val a71 = AnswerTag("еда")
+        val a72 = AnswerTag("еду")
+
+
+        val arrayForMedicine = AnswerTag.makeList(
+            listOf(
+                "медицина",
+                "лекарства",
+                "врачи",
+                "врач",
+                "доктор",
+                "больница",
+                "аптечка",
+                "аптечку",
+                "брать"
+            )
+        )
+        val an0 = Answer(990,
+            "Заповедные территории – зоны высокой вулканической и сейсмической активности, вокруг множество диких животных. Больницы рядом нет, поэтому возьмите личную аптечку",
+            "Есть ли рядом больницы?"
+        )
+        an0.tags = arrayForMedicine
+        appDatabase.articleDao().addArticleWithTags(an0)
+
+        val arrayForQr = AnswerTag.makeList(
+            listOf(
+                "covid19",
+                "коронавирус",
+                "qr",
+                "код",
+                "коронавируса",
+                "медецина"
+            )
+        )
+        val an3 = Answer(
+            65,
+            "Необходимо наличие отрицательного ПЦР теста, qr код не обязателен",
+            "Нужен ли qr код?"
+        )
+        an3.tags = arrayForQr
+        appDatabase.articleDao().addArticleWithTags(an3)
+
+        val arrayForNext = AnswerTag.makeList(
+            listOf(
+                "когда",
+                "приезжать",
+                "приехать",
+                "делать",
+                "дальше"
+            )
+        )
+        val an4 = Answer(
+            543,
+            "График работы волонтеров на сезоны размещается на сайте www.kronoki.ru ",
+            "Когда призжать?"
+        )
+        an4.tags = arrayForNext
+        appDatabase.articleDao().addArticleWithTags(an4)
+
+
+        val arrayForClothes = AnswerTag.makeList(
+            listOf(
+                "какую",
+                "одежду",
+                "одежда",
+                "брать",
+                "нужна"
+            )
+        )
+        val an5= Answer(
+            123,
+            "Температура на Камчатке быстро меняется. Возьмите теплую и легкую одежду. Не берите с собой чрезмерно открытую одежду",
+            "Какую одежду взять?"
+        )
+        an5.tags = arrayForClothes
+        appDatabase.articleDao().addArticleWithTags(an5)
+
+
+        val arrayForNet = AnswerTag.makeList(
+            listOf(
+                "интернет",
+                "есть",
+                "связь",
+            )
+        )
+        val an6= Answer(
+            1666,
+            "На кордонах утром и вечером есть медленный интернет. Хватит только на отправку текстовых сообщений. Связи практически нет",
+            "Есть интернет?"
+        )
+        an6.tags = arrayForNet
+        appDatabase.articleDao().addArticleWithTags(an6)
+
+
+
 
         val an1 = Answer(
             1,
             "Основное питание предоставляется. Фрукты, молочные продукты и сладости необходимо докупать отдельно",
             "Предоставляется ли питание?"
         )
-        an1.tags = arrayListOf(a5, a51, a6, a7)
+        an1.tags = arrayListOf(a5, a51, a6, a7, a71, a72)
         val an2 = Answer(
             2,
             "Перелет до Камчатки осуществляется за ваш счет",
             "Кто оплачивает перелёт до Камчатки?"
         )
-        an2.tags = arrayListOf(a1, a2, a3, a31, a4, a5)
+        an2.tags = arrayListOf(a1, a2, a3, a31, a32, a41, a4, a5)
         val a = appDatabase.articleDao().addArticleWithTags(an1)
         appDatabase.articleDao().addArticleWithTags(an2)
 

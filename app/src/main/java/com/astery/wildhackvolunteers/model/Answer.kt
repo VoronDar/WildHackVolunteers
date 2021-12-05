@@ -7,6 +7,7 @@ import com.astery.wildhackvolunteers.model.AnswerTag
 
 @Entity
 data class Answer(@PrimaryKey val id:Int, val answer:String, val question:String){
+    var saved:Boolean = false
     @Ignore
     var tags = ArrayList<AnswerTag>()
 }

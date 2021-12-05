@@ -27,4 +27,10 @@ class QuestionViewModel @Inject constructor() : ViewModel() {
             _anwers.value = repository.getAnswers(string)
         }
     }
+
+    fun save(answer: Answer){
+        viewModelScope.launch {
+            repository.saveAnswer(true, answer)
+        }
+    }
 }

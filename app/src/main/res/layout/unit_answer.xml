@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout>
+<layout xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="answer"
@@ -18,6 +18,7 @@
         style="@style/cardContent">
 
         <TextView
+            android:fontFamily="@font/medium"
             android:id="@+id/textView"
             style="@style/ImportantArticleText"
             android:layout_width="0dp"
@@ -25,7 +26,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="7dp"
-            android:text="@{answer.answer}"
+            android:text="@{answer.question}"
             app:layout_constraintEnd_toStartOf="@id/clickable"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -35,6 +36,23 @@
             android:src = "@drawable/ic_delete"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            />
+
+
+        <androidx.constraintlayout.widget.Barrier
+            android:id = "@+id/barrier"
+            android:layout_marginTop="12dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:barrierDirection="bottom"
+            app:constraint_referenced_ids="textView,clickable"
+            tools:layout_editor_absoluteY="27dp" />
+        <TextView
+            app:layout_constraintTop_toBottomOf="@id/barrier"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ArticleText"
+            android:text = "@{answer.answer}"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

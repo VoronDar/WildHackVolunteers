@@ -8,7 +8,7 @@ import timber.log.Timber
 @Dao
 interface ArticleDao {
     /** return articles */
-    @Query("SELECT Answer.id, Answer.answer, Answer.question FROM Answer INNER JOIN AnswerAndTag ON Answer.id == AnswerAndTag.answerId AND AnswerAndTag.tagId IN (:tags) GROUP BY Answer.id")
+    @Query("SELECT Answer.id, Answer.answer, Answer.question, Answer.saved FROM Answer INNER JOIN AnswerAndTag ON Answer.id == AnswerAndTag.answerId AND AnswerAndTag.tagId IN (:tags) GROUP BY Answer.id")
     suspend fun getArticlesWithTag(tags: List<String>): List<Answer>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
@@ -32,6 +32,12 @@ interface ArticleDao {
            addTagRelation(AnswerAndTag(article.id, i.id))
         }
     }
+
+    @Query("SELECT * FROM Answer WHERE Answer.saved = :saved")
+    suspend fun getSavedAnswers(saved:Boolean):List<Answer>
+
+    @Update
+    suspend fun updateAnswer(answer:Answer)
 
     @Query("DELETE FROM answerandtag")
     suspend fun deleteArticleAndTagRelations()

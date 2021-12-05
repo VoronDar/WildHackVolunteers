@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.astery.wildhack.ui.adapterUtils.BlockListener
 import com.astery.wildhack.ui.fragments.TFragment
 import com.astery.wildhack.ui.fragments.main.AnswerAdapter
 import com.astery.wildhack.ui.stt.SPTUsable
@@ -53,6 +55,12 @@ class QuestionFragment : TFragment(), SPTUsable{
             binding.recyclerView.adapter = answerAdapter
             binding.recyclerView.layoutManager =
                 LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
+            answerAdapter?.blockListener = object:BlockListener{
+                override fun onClick(position: Int) {
+                    viewModel.save(answerAdapter!!.units!![position])
+                    Toast.makeText(requireContext(), "Информация сохранена", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
     }
 

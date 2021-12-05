@@ -37,7 +37,7 @@
                     style="@style/icon"
                     android:id = "@+id/voice"
                     android:visibility="gone"
-                    android:src = "@drawable/profile"
+                    android:src = "@drawable/ic_baseline_keyboard_voice_24"
                     />
                 <ImageView
                     style="@style/icon"
