@@ -1,4 +1,4 @@
-package com.astery.wildhack
+package com.astery.wildhackvolunteers.localStorage
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -11,6 +11,7 @@ import com.astery.wildhackvolunteers.model.PersonFields
 import com.astery.wildhackvolunteers.model.TaskId
 import com.astery.wildhackvolunteers.ui.fragments.main.State
 import dagger.hilt.android.qualifiers.ApplicationContext
+import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 
@@ -22,19 +23,23 @@ class LocalStorage @Inject constructor(
 
     suspend fun getAnswers(sentence: String): List<Answer> {
         val a = sentence.split(" ").toList()
+        Timber.d("${a.toList()}")
         return appDatabase.articleDao().getArticlesWithTag(a)
     }
 
+    suspend fun getAnswers():List<Answer>{
+        return appDatabase.articleDao().getAdvices()
+    }
     suspend fun fillAnswers() {
-        val a1 = AnswerTag("Перелёт")
-        val a2 = AnswerTag("Переезд")
-        val a3 = AnswerTag("Камчатка")
-        val a31 = AnswerTag("Камчатки")
-        val a4 = AnswerTag("Доехать")
-        val a5 = AnswerTag("Оплачивает")
-        val a51 = AnswerTag("Оплачиваемое")
-        val a6 = AnswerTag("Питание")
-        val a7 = AnswerTag("Пропитание")
+        val a1 = AnswerTag("перелёт")
+        val a2 = AnswerTag("переезд")
+        val a3 = AnswerTag("камчатка")
+        val a31 = AnswerTag("камчатки")
+        val a4 = AnswerTag("доехать")
+        val a5 = AnswerTag("оплачивает")
+        val a51 = AnswerTag("оплачиваемое")
+        val a6 = AnswerTag("питание")
+        val a7 = AnswerTag("пропитание")
 
         val an1 = Answer(
             1,
@@ -48,9 +53,11 @@ class LocalStorage @Inject constructor(
             "Кто оплачивает перелёт до Камчатки?"
         )
         an2.tags = arrayListOf(a1, a2, a3, a31, a4, a5)
-        appDatabase.articleDao().addArticleWithTags(an1)
+        val a = appDatabase.articleDao().addArticleWithTags(an1)
         appDatabase.articleDao().addArticleWithTags(an2)
 
+        Timber.d("принт алл ${appDatabase.articleDao().getTags()}")
+        Timber.d("принт $a")
     }
 
 

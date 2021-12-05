@@ -60,7 +60,7 @@
     <com.google.android.material.card.MaterialCardView
         style="@style/card"
         android:layout_margin="0dp"
-        android:visibility="@{viewModel.state != State.idle? View.VISIBLE: View.GONE}"
+        android:visibility="@{viewModel.state == State.idle? View.VISIBLE: View.GONE}"
         app:cardBackgroundColor="#F4F5F7"
         android:layout_width="match_parent"
         android:layout_marginBottom="16dp"

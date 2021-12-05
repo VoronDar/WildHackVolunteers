@@ -17,8 +17,10 @@ import android.speech.RecognizerIntent
 
 import android.content.Intent
 import android.view.View
+import android.widget.EditText
 import androidx.core.view.isGone
 import com.astery.wildhack.ui.activity.MainActivityViewModel
+import com.astery.wildhack.ui.stt.SPTUsable
 import com.astery.wildhack.ui.stt.SpeechToText
 import com.astery.wildhackvolunteers.R
 
@@ -64,8 +66,27 @@ class MainActivity : AppCompatActivity(), ParentActivity {
         findViewById<View>(R.id.app_bar)?.isGone = set
     }
 
+    override fun setSearch(set:Boolean, fragment: SPTUsable){
+        findViewById<View>(R.id.search).isGone = !set
+
+        if (speechToText.isRecognitionAvailable()) {
+            findViewById<View>(R.id.voice).isGone = !set
+            findViewById<View>(R.id.voice).setOnClickListener {
+                speechToText.speak()
+            }
+        }
+        findViewById<View>(R.id.search).setOnClickListener {
+            fragment.getText(findViewById<EditText>(R.id.search_text)!!.text.toString())
+        }
+        findViewById<View>(R.id.search_text).isGone = !set
+        findViewById<View>(R.id.toolbar).isGone = set
+        speechToText.fragment = fragment
+
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
+        Timber.d("recognition $data $requestCode $resultCode")
         if (requestCode == SpeechToText.VOICE_RECOGNITION_REQUEST) {
             if (data != null) {
                 val matches = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
@@ -81,4 +102,5 @@ class MainActivity : AppCompatActivity(), ParentActivity {
 
 interface ParentActivity{
     fun setFullScreen(set:Boolean)
+    fun setSearch(set:Boolean, fragment: SPTUsable)
 }

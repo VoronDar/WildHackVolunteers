@@ -4,16 +4,11 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import com.astery.wildhack.LocalStorage
-import com.astery.wildhack.ValueNotFoundException
+import com.astery.wildhackvolunteers.localStorage.LocalStorage
+import com.astery.wildhackvolunteers.localStorage.ValueNotFoundException
 import com.astery.wildhack.model.Answer
 import com.astery.wildhackvolunteers.model.Person
 import com.astery.wildhack.remoteStorage.RemoteDataStorage
-import com.astery.wildhack.states.JError
-import com.astery.wildhack.states.JSuccess
-import com.astery.wildhack.states.JobState
-import com.astery.wildhack.states.coreTypes.InternetConnectionError
-import com.astery.wildhack.states.coreTypes.SomethingWentWrongError
 import com.astery.wildhackvolunteers.model.TaskId
 import com.astery.wildhackvolunteers.ui.fragments.main.State
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -30,7 +25,7 @@ open class Repository @Inject constructor(
     private suspend fun getToken():String{
         return try{
             localStorage.getToken(Date())
-        } catch (e:ValueNotFoundException){
+        } catch (e: ValueNotFoundException){
             Timber.d("there is no token in cache")
             getUpdatedToken()
         }
@@ -99,7 +94,15 @@ open class Repository @Inject constructor(
     suspend fun fillAnswers(){
         localStorage.fillAnswers()
     }
-    suspend fun getAnswers(string:String):List<Answer>{
-        return localStorage.getAnswers(string)
+    suspend fun getAnswers(string:String):ArrayList<Answer>{
+        val list = ArrayList<Answer>()
+        val l = localStorage.getAnswers(string)
+        for (i in l){
+            list.add(i)
+        }
+        return list
+    }
+    suspend fun getAllAnswers():List<Answer>{
+        return localStorage.getAnswers()
     }
 }

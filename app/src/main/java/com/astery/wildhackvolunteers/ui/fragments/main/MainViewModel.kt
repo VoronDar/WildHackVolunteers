@@ -48,24 +48,20 @@ class MainViewModel @Inject constructor(@ApplicationContext val context: Context
         getTasks()
         getAnswers()
         loadState()
-        fill()
         get()
     }
 
-    private fun fill(){
-        viewModelScope.launch {
-            repository.fillAnswers()
-        }
-    }
 
     private fun get(){
         viewModelScope.launch {
+            repository.fillAnswers()
+            Timber.d("all answers ${repository.getAllAnswers()}")
             val list = repository.getAnswers("Кто оплачивает")
             val list2 = repository.getAnswers("Кто оплачивает питание")
             val list3 = repository.getAnswers("перелет до камчатки")
-            Timber.d("$list")
-            Timber.d("$list2")
-            Timber.d("$list3")
+            Timber.d("list $list")
+            Timber.d("list $list2")
+            Timber.d("list $list3")
         }
     }
 

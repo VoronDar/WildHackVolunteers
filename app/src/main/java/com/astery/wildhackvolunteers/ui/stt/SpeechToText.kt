@@ -13,14 +13,14 @@ class SpeechToText(val activity: MainActivity) {
     var fragment:SPTUsable? = null
 
 
-    private fun isRecognitionAvailable():Boolean {
+    fun isRecognitionAvailable():Boolean {
         val manager: PackageManager = activity.packageManager
         val activities =
             manager.queryIntentActivities(Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH), 0)
         return activities.isNotEmpty()
     }
 
-    private fun speak() {
+    fun speak() {
         val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
         intent.putExtra(RecognizerIntent.EXTRA_CALLING_PACKAGE, javaClass.getPackage().name)
         intent.putExtra(

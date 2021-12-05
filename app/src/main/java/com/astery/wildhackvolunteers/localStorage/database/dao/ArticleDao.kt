@@ -3,6 +3,7 @@ package com.astery.wildhackvolunteers.localStorage.database.dao
 import androidx.room.*
 import com.astery.wildhack.model.Answer
 import com.astery.wildhackvolunteers.model.AnswerAndTag
+import timber.log.Timber
 
 @Dao
 interface ArticleDao {
@@ -15,6 +16,11 @@ interface ArticleDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addAdvise(advice: Answer)
 
+    @Query("SELECT * FROM ANSWER")
+    suspend fun getAdvices():List<Answer>
+    @Query("SELECT * FROM AnswerAndTag")
+    suspend fun getTags():List<AnswerAndTag>
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addTagRelation(articleAndTag: AnswerAndTag)
@@ -23,7 +29,7 @@ interface ArticleDao {
     suspend fun addArticleWithTags(article: Answer){
         addAdvise(article)
         for (i in article.tags){
-            addTagRelation(AnswerAndTag(article.id, i.id))
+           addTagRelation(AnswerAndTag(article.id, i.id))
         }
     }
 
